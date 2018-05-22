@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Please enter number of items:"
 read NUMBER_OF_ITEMS
 echo "Please enter the individual price per item:"
