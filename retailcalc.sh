@@ -9,32 +9,33 @@ ordervalue=$((items*price))
 echo "Order value: ${ordervalue}"
 echo "-"
 
+discount_value () {
+  echo "Your discount value is $1%"
+  discountvalue=$(echo "$ordervalue -($ordervalue / 100 * $1)" | bc)
+}
+
 if [ "${ordervalue}" -gt 50000 ]
   then
-    echo "Your discount value is 15%"
-    discountvalue=$(echo "$ordervalue *0.85" | bc)
+    discount_value 15
 elif [ "${ordervalue}" -gt 10000 ]
   then
-    echo "Your discount value is 10%"
-    discountvalue=$(echo "$ordervalue *0.90" | bc)
+    discount_value 10
 elif [ "${ordervalue}" -gt 7000 ]
   then
-    echo "Your discount value is 7%"
-    discountvalue=$(echo "$ordervalue *0.93" | bc)
+    discount_value 7
 elif [ "${ordervalue}" -gt 5000 ]
   then
-    echo "Your discount value is 5%"
-    discountvalue=$(echo "$ordervalue *0.95" | bc)
+    discount_value 5
 elif [ "${ordervalue}" -gt 1000 ]
   then
-    echo "Your discount value is 3%"
-    discountvalue=$(echo "$ordervalue *0.97" | bc)
+    discount_value 3
 else
   echo "No discount applicable!"
     discountvalue=$(echo "$ordervalue *1" | bc)
 fi
 echo "Order value after discounts: ${discountvalue}"
 echo "-"
+
 
  case $state in
    UT)
