@@ -16,9 +16,9 @@ discounter () {
 
 if (( $(echo "${ordervalue} > 50000" | bc -l) )) ; then discounter 15
 elif (( $(echo "${ordervalue} > 10000" | bc -l) )) ; then discounter 10
-elif (( $(echo "${ordervalue} > 7000.00" | bc -l) )) ; then discounter 7
-elif (( $(echo "${ordervalue} > 5000.00" | bc -l) )) ; then discounter 5
-elif (( $(echo "${ordervalue} > 1000.00" | bc -l) )) ; then discounter 3
+elif (( $(echo "${ordervalue} > 7000" | bc -l) )) ; then discounter 7
+elif (( $(echo "${ordervalue} > 5000" | bc -l) )) ; then discounter 5
+elif (( $(echo "${ordervalue} > 1000" | bc -l) )) ; then discounter 3
 else echo "No discount applicable!"
   discountvalue=$ordervalue
 fi
