@@ -1,11 +1,11 @@
 !/bin/bash
 items="$1"
-price="$2"
+price=$(echo "$2" | bc)
 state="$3"
 echo "Number of items: $items"
 echo "Price per item: $price"
 echo "State code: $state"
-ordervalue=$((items*price))
+ordervalue=$(echo "$items*$price" | bc)
 echo "Order value: ${ordervalue}"
 echo "-"
 
@@ -14,25 +14,15 @@ discounter () {
   discountvalue=$(echo "$ordervalue -($ordervalue / 100 * $1)" | bc)
 }
 
-if [ "${ordervalue}" -gt 50000 ]
-  then
-    discounter 15
-elif [ "${ordervalue}" -gt 10000 ]
-  then
-    discounter 10
-elif [ "${ordervalue}" -gt 7000 ]
-  then
-    discounter 7
-elif [ "${ordervalue}" -gt 5000 ]
-  then
-    discounter 5
-elif [ "${ordervalue}" -gt 1000 ]
-  then
-    discounter 3
-else
-  echo "No discount applicable!"
-    discountvalue=$(echo "$ordervalue *1" | bc)
+if (( $(echo "${ordervalue} > 50000" | bc -l) )) ; then discounter 15
+elif (( $(echo "${ordervalue} > 10000" | bc -l) )) ; then discounter 10
+elif (( $(echo "${ordervalue} > 7000.00" | bc -l) )) ; then discounter 7
+elif (( $(echo "${ordervalue} > 5000.00" | bc -l) )) ; then discounter 5
+elif (( $(echo "${ordervalue} > 1000.00" | bc -l) )) ; then discounter 3
+else echo "No discount applicable!"
+  discountvalue=$ordervalue
 fi
+
 echo "Order value after discounts: ${discountvalue}"
 echo "-"
 
@@ -59,6 +49,6 @@ case $state in
     ;;
    *)
     echo "State not known - no tax applied"
-    taxedvalue=$(echo "$discountvalue *1" | bc)
+    taxedvalue=$discountvalue
  esac
 echo "Order value after tax: ${taxedvalue}"
